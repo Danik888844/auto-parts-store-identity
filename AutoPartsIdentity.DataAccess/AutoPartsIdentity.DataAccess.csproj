@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AutoPartsIdentity.Core\AutoPartsIdentity.Core.csproj" />
+  </ItemGroup>
+
 </Project>

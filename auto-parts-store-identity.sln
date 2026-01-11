@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPartsIdentity.Business"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPartsIdentity.DataAccess", "AutoPartsIdentity.DataAccess\AutoPartsIdentity.DataAccess.csproj", "{E4FCF8E0-BB4F-4FB6-814D-151108FE7C2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPartsIdentity.Core", "AutoPartsIdentity.Core\AutoPartsIdentity.Core.csproj", "{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{E4FCF8E0-BB4F-4FB6-814D-151108FE7C2A}.Release|x64.Build.0 = Release|Any CPU
 		{E4FCF8E0-BB4F-4FB6-814D-151108FE7C2A}.Release|x86.ActiveCfg = Release|Any CPU
 		{E4FCF8E0-BB4F-4FB6-814D-151108FE7C2A}.Release|x86.Build.0 = Release|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Debug|x64.Build.0 = Debug|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Debug|x86.Build.0 = Debug|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Release|x64.ActiveCfg = Release|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Release|x64.Build.0 = Release|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Release|x86.ActiveCfg = Release|Any CPU
+		{8A8415AC-C3D2-4104-92FB-FE5C1986E35C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
