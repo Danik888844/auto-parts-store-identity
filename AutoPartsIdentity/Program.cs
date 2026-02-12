@@ -71,23 +71,35 @@ await using (var scope = app.Services.CreateAsyncScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
 
+    var roleNames = new[]
+    {
+        UserRoleEnum.Administrator,
+        UserRoleEnum.Seller,
+        UserRoleEnum.Warehouse,
+        UserRoleEnum.Manager
+    };
+    
     const string adminRole = UserRoleEnum.Administrator;
     var adminUserName = "admin";
     var adminEmail = "admin@mail.com";
     var adminPassword = "QWE123qwe";
 
-    // create a role
-    if (!await roleManager.RoleExistsAsync(adminRole))
+    // create a roles
+    foreach (var roleName in roleNames)
     {
-        var roleCreate = await roleManager.CreateAsync(new IdentityRole<Guid>(adminRole));
-        if (!roleCreate.Succeeded)
+        if (await roleManager.RoleExistsAsync(roleName))
+            continue;
+
+        var create = await roleManager.CreateAsync(new IdentityRole<Guid>(roleName));
+        if (!create.Succeeded)
         {
-            logger.LogError("Failed to create role: {Role}", adminRole);
-            logger.LogError("{Error}", string.Join("; ", roleCreate.Errors.Select(e => e.Description)));
+            logger.LogError("Failed to create role: {Role}. Errors: {Errors}",
+                roleName,
+                string.Join("; ", create.Errors.Select(e => e.Description)));
         }
         else
         {
-            logger.LogInformation("Role created: {Role}", adminRole);
+            logger.LogInformation("Role created: {Role}", roleName);
         }
     }
 
@@ -101,7 +113,8 @@ await using (var scope = app.Services.CreateAsyncScope())
             LastName = "",
             UserName = adminUserName,
             Email = adminEmail,
-            EmailConfirmed = true
+            EmailConfirmed = true,
+            IsActive = true
         };
 
         var userCreate = await userManager.CreateAsync(admin, adminPassword);
@@ -150,9 +163,11 @@ app.UseCookiePolicy(new CookiePolicyOptions()
 });
 
 app.UseCors(builder.Configuration.GetSection("CorsLabel").Value!);
-app.UseAuthentication();
 app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

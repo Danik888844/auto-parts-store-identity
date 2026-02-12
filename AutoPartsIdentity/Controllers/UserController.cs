@@ -21,11 +21,25 @@ public class UserController : BaseController
     {
         _mediator = mediator;
     }
-
-    [HttpPost("register")]
+    
+    [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<IActionResult> Register(CreateUserFormDto form)
+    public async Task<IActionResult> Login(LoginFormDto form)
+    {
+        return Return(await _mediator.Send(new UserLoginCommand(form)));
+    }
+    
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateUserFormDto form)
     {
         return Return(await _mediator.Send(new UserCreateCommand(form)));
+    }
+    
+    [Authorize]
+    [HttpGet("list")]
+    public async Task<IActionResult> GetList()
+    {
+        return Return(await _mediator.Send(new UserGetListCommand()));
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoPartsIdentity.DataAccess.Contexts;
+using AutoPartsIdentity.DataAccess.Dals;
 using AutoPartsIdentity.DataAccess.Models.DatabaseModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +46,7 @@ public static class DalServiceRegistrations
 
         #region Dals
         
-        //services.AddScoped<IUserDal, UserDal>();
+        services.AddScoped<IUserDal, UserDal>();
         
         #endregion
 

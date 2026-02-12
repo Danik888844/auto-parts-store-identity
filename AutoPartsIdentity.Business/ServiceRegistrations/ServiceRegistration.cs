@@ -13,6 +13,7 @@ public static class ServiceRegistration
         services.AddMediatrServices(configuration, environment);
         services.AddCoreServices(configuration, environment);
         services.AddFluentValidationServices(configuration, environment);
+        services.AddAutoMapServiceRegistrations(configuration, environment);
         
         return services;
     }

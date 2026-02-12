@@ -14,6 +14,10 @@ public static class MediatrServiceRegistrations
 
         services.AddMediatR(cnf =>
             cnf.RegisterServicesFromAssemblies(typeof(UserCreateCommand.Handler).Assembly));
+        services.AddMediatR(cnf =>
+            cnf.RegisterServicesFromAssemblies(typeof(UserLoginCommand.Handler).Assembly));
+        services.AddMediatR(cnf =>
+            cnf.RegisterServicesFromAssemblies(typeof(UserGetListCommand.Handler).Assembly));
 
         #endregion
         

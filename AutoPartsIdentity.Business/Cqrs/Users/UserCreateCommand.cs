@@ -51,7 +51,8 @@ public class UserCreateCommand : IRequest<IDataResult<object>>
                 PhoneNumber = request.Form.PhoneNumber?.Trim() ?? String.Empty,
                 FirstName = request.Form.FirstName.Trim(),
                 LastName = request.Form.LastName.Trim(),
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                IsActive = true
             };
 
             var result = await _userManager.CreateAsync(user, request.Form.Password);
