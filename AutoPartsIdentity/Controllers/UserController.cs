@@ -30,6 +30,13 @@ public class UserController : BaseController
     }
     
     [Authorize]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        return Return(await _mediator.Send(new UserLogoutCommand()));
+    }
+    
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create(CreateUserFormDto form)
     {

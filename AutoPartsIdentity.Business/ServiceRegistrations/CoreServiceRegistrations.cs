@@ -105,6 +105,7 @@ public static class CoreServiceRegistrations
         
         services.Configure<JwtTokenOptions>(configuration.GetSection("JwtSettings"));
         services.AddSingleton<ITokenCacheService, TokenCacheService>();
+        services.AddHttpContextAccessor();
         
         return services;
     }

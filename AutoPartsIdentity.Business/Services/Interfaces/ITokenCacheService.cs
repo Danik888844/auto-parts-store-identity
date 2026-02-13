@@ -6,4 +6,5 @@ namespace AutoPartsIdentity.Business.Services.Interfaces;
 public interface ITokenCacheService
 {
     public Token? RegisterUser(UserDto user);
+    public bool UnregisterUser(string userId);
 }
