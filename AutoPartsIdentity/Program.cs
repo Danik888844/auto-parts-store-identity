@@ -74,9 +74,7 @@ await using (var scope = app.Services.CreateAsyncScope())
     var roleNames = new[]
     {
         UserRoleEnum.Administrator,
-        UserRoleEnum.Seller,
-        UserRoleEnum.Warehouse,
-        UserRoleEnum.Manager
+        UserRoleEnum.Seller
     };
     
     const string adminRole = UserRoleEnum.Administrator;

@@ -42,12 +42,12 @@ public class UserLoginCommand : IRequest<IDataResult<object>>
 
         public async Task<IDataResult<object>> Handle(UserLoginCommand request, CancellationToken ct)
         {
-            if (string.IsNullOrWhiteSpace(request.Form.Login) || string.IsNullOrWhiteSpace(request.Form.Password))
+            if (string.IsNullOrWhiteSpace(request.Form.Email) || string.IsNullOrWhiteSpace(request.Form.Password))
                 return new ErrorDataResult<object>("Invalid login or password", HttpStatusCode.BadRequest);
 
             // find by username / email
-            var user = await _userManager.FindByNameAsync(request.Form.Login)
-                       ?? await _userManager.FindByEmailAsync(request.Form.Login);
+            var user = await _userManager.FindByNameAsync(request.Form.Email)
+                       ?? await _userManager.FindByEmailAsync(request.Form.Email);
 
             if (user is null)
                 return new ErrorDataResult<object>("Invalid login or password", HttpStatusCode.BadRequest);
