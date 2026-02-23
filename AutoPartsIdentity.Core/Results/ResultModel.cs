@@ -1,12 +1,20 @@
-﻿using System.Net;
+using System.Net;
+using System.Text.Json.Serialization;
 
 namespace AutoPartsIdentity.Core.Results;
 
 public class ResultModel : IResult
 {
+    [JsonPropertyName("result")]
     public bool Result { get; }
+
+    [JsonPropertyName("message")]
     public string Message { get; }
+
+    [JsonPropertyName("statusCode")]
     public HttpStatusCode StatusCode { get; set; }
+
+    [JsonPropertyName("errorMessages")]
     public List<string> ErrorMessages { get; set; }
 
     public ResultModel(bool result, HttpStatusCode statusCode)

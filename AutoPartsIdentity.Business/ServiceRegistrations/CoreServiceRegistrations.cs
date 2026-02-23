@@ -1,4 +1,5 @@
-﻿using System.Text;
+using System.Security.Claims;
+using System.Text;
 using AutoPartsIdentity.Business.Services;
 using AutoPartsIdentity.Business.Services.Interfaces;
 using AutoPartsIdentity.Core.Helpers;
@@ -55,7 +56,8 @@ public static class CoreServiceRegistrations
                     ValidAudience = configuration.GetSection("JwtSettings").GetSection("Audience").Value,
                     ValidateLifetime = true,
                     RequireExpirationTime = true,
-                    ClockSkew = TimeSpan.Zero
+                    ClockSkew = TimeSpan.Zero,
+                    RoleClaimType = ClaimTypes.Role
                 };
             });
             

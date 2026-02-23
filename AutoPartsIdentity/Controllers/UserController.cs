@@ -1,9 +1,9 @@
-﻿using AutoPartsIdentity.Business.Cqrs.Users;
+using AutoPartsIdentity.Business.Cqrs.Users;
+using AutoParts.DataAccess.Models.DtoModels;
 using AutoPartsIdentity.DataAccess.Models.DtoModels.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 
 namespace AutoPartsIdentity.Controllers;
 
@@ -36,17 +36,40 @@ public class UserController : BaseController
         return Return(await _mediator.Send(new UserLogoutCommand()));
     }
     
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     [HttpPost]
     public async Task<IActionResult> Create(CreateUserFormDto form)
     {
         return Return(await _mediator.Send(new UserCreateCommand(form)));
     }
+
+    [Authorize(Roles = "Administrator")]
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, UpdateUserFormDto form)
+    {
+        if (id != form.Id)
+            return BadRequest();
+        return Return(await _mediator.Send(new UserUpdateCommand(form)));
+    }
     
     [Authorize]
-    [HttpGet("list")]
-    public async Task<IActionResult> GetList()
+    [HttpPost("list")]
+    public async Task<IActionResult> GetList(PaginationFormDto form)
     {
-        return Return(await _mediator.Send(new UserGetListCommand()));
+        return Return(await _mediator.Send(new UserGetListCommand(form)));
+    }
+
+    [Authorize]
+    [HttpPut("role")]
+    public async Task<IActionResult> ChangeRole(ChangeUserRoleFormDto form)
+    {
+        return Return(await _mediator.Send(new UserChangeRoleCommand(form)));
+    }
+
+    [AllowAnonymous]
+    [HttpPost("display-names")]
+    public async Task<IActionResult> GetDisplayNames([FromBody] UserDisplayNamesRequestDto request)
+    {
+        return Return(await _mediator.Send(new UserGetDisplayNamesCommand(request.UserIds ?? new List<string>())));
     }
 }

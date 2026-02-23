@@ -1,4 +1,4 @@
-﻿
+
 using System.Net;
 using AutoMapper;
 using AutoPartsIdentity.Business.Services.Interfaces;
@@ -66,8 +66,10 @@ public class UserLoginCommand : IRequest<IDataResult<object>>
 
             if (!result.Succeeded)
                 return new ErrorDataResult<object>("Invalid login or passwords", HttpStatusCode.BadRequest);
-            
+
             var userDto = _mapper.Map<UserDto>(user);
+            // Роли нужны для JWT — иначе [Authorize(Roles = "Administrator")] не сработает
+            userDto.Roles = (await _userManager.GetRolesAsync(user)).ToList();
 
             var userToken = _tokenCacheService.RegisterUser(userDto);
             if(userToken == null)

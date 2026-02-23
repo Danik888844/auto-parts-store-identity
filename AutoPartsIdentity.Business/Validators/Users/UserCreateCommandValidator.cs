@@ -1,4 +1,5 @@
-﻿using AutoPartsIdentity.Business.Cqrs.Users;
+using AutoPartsIdentity.Business.Cqrs.Users;
+using AutoPartsIdentity.DataAccess.Enums;
 using AutoPartsIdentity.DataAccess.Models.DatabaseModels;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,8 @@ namespace AutoPartsIdentity.Business.Validators.Users;
 
 public class UserCreateCommandValidator : AbstractValidator<UserCreateCommand>
 {
+    private static readonly string[] AllowedRoles = { UserRoleEnum.Administrator, UserRoleEnum.Seller };
+
     public UserCreateCommandValidator(UserManager<User> userManager)
     {
         RuleFor(x => x.Form.FirstName)
@@ -38,5 +41,12 @@ public class UserCreateCommandValidator : AbstractValidator<UserCreateCommand>
         RuleFor(x => x.Form.Password)
             .NotEmpty().MinimumLength(6).MaximumLength(100)
             .WithMessage("From 6 to 100 characters ranged");
+
+        When(x => !string.IsNullOrWhiteSpace(x.Form.Role), () =>
+        {
+            RuleFor(x => x.Form.Role)
+                .Must(role => AllowedRoles.Contains(role?.Trim() ?? string.Empty))
+                .WithMessage($"Role must be one of: {string.Join(", ", AllowedRoles)}");
+        });
     }
 }

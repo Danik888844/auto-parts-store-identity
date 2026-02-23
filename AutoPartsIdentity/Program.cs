@@ -1,4 +1,4 @@
-﻿using AutoPartsIdentity.Business;
+using AutoPartsIdentity.Business;
 using AutoPartsIdentity.Business.ServiceRegistrations;
 using AutoPartsIdentity.DataAccess.Contexts;
 using AutoPartsIdentity.DataAccess.Enums;
@@ -15,6 +15,8 @@ builder.Configuration
 #region Service Registration
 
 AppConfig.Configuration = builder.Configuration;
+// Регистрируем до AddServices, чтобы при 403 (Forbidden) возвращался JSON с сообщением, а не пустое тело
+builder.Services.AddSingleton<Microsoft.AspNetCore.Authorization.IAuthorizationMiddlewareResultHandler, AutoPartsIdentity.Middleware.JsonForbiddenAuthorizationHandler>();
 builder.Services.AddServices(builder.Configuration, builder.Environment);
 
 builder.Logging.ClearProviders();
@@ -78,8 +80,8 @@ await using (var scope = app.Services.CreateAsyncScope())
     };
     
     const string adminRole = UserRoleEnum.Administrator;
-    var adminUserName = "admin";
-    var adminEmail = "admin@mail.com";
+    var adminUserName = SystemAdminConstants.UserName;
+    var adminEmail = SystemAdminConstants.Email;
     var adminPassword = "QWE123qwe";
 
     // create a roles

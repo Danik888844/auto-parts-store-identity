@@ -1,4 +1,4 @@
-﻿
+
 using System.Net;
 using AutoPartsIdentity.Core.Results;
 using AutoPartsIdentity.DataAccess.Models.DatabaseModels;
@@ -58,7 +58,15 @@ public class UserCreateCommand : IRequest<IDataResult<object>>
             var result = await _userManager.CreateAsync(user, request.Form.Password);
             if (!result.Succeeded)
                 return new ErrorDataResult<object>(string.Join("; ", result.Errors.Select(e => e.Description)), HttpStatusCode.BadRequest);
-            
+
+            var role = request.Form.Role?.Trim();
+            if (!string.IsNullOrEmpty(role))
+            {
+                var addRoleResult = await _userManager.AddToRoleAsync(user, role);
+                if (!addRoleResult.Succeeded)
+                    return new ErrorDataResult<object>(string.Join("; ", addRoleResult.Errors.Select(e => e.Description)), HttpStatusCode.BadRequest);
+            }
+
             return new SuccessDataResult<object>("Success");
         }
     }
